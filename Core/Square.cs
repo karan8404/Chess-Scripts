@@ -3,25 +3,23 @@ using System.Collections.Generic;
 
 public class Square
 {
-    Color color;
-    bool hasPiece;
-    Piece piece;
+    public Color color;
+    public bool hasPiece;
+    public Piece piece;
+    public int[] location;
 
-    public Square(Color color)
+    public Square(int[] location, Color color = Color.White)
     {
         this.color = color;
         hasPiece = false;
+        this.location = location;
     }
 
-    public Square(Piece p, Color c = Color.White)
+    public Square(Piece p, int[] location, Color c = Color.White)
     {
         color = c;
         hasPiece = true;
         piece = p;
-    }
-
-    public Square()
-    {
-        hasPiece = false;
+        this.location = location;
     }
 }
