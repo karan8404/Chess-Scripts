@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-class Square
+public class Square
 {
     Color color;
     bool hasPiece;
@@ -12,8 +12,13 @@ class Square
         hasPiece=false;
     }
 
-    Square(Color c,Piece p){
+    Square(Color c=Color.White,Piece p){
         color=c;
+        hasPiece=true;
         piece=p;
+    }
+
+    Square(){
+        hasPiece=false;
     }
 }

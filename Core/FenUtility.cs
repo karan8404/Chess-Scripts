@@ -1,12 +1,13 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-class FenUtility
+public class FenUtility
 {
     string fen;
-    string startingPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+    static string startingPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
-    public Board createBoard(string fen)
+    public static Board createBoard(string fen)
     {
         int[2] location = { 0, 0 };
         Board board = new Board();
@@ -18,14 +19,18 @@ class FenUtility
                 int cNum = char.GetNumericValue(c);
                 while (cNum-- > 0)
                 {
-                    board.squareAt(location) = new Square(Color.White);
+                    board.squares[location[0]][location[1]]=new Square();
+                    location[0]=location[0]+1;
                 }
             }
             else if (char.IsLetter(c))
             {
-
+                board.pieces.Add(pieceDictionary[c]);
+                board.squares[location[0]][location[1]]=new Square(board.pieces[^1]);
             }
-
+            else if(c=='/'){
+                location[1]=location[1]+1;
+            }
         }
     }
 
