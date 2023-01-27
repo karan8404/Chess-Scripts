@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class FenUtility
 {
@@ -9,80 +10,79 @@ public class FenUtility
 
     public static void createBoard(Board board, string fen)
     {
-        int[] location = { 0, 0 };
-        for (int i = 0; i < fen.Length; i++)
+        makeBoard(board);
+        int[] lc = { 0, 7 };
+        foreach (char c in fen)
         {
-            char c = fen[i];
             if (char.IsDigit(c))
             {
-                int cNum = ((int)char.GetNumericValue(c));
-                while (cNum-- > 0)
-                {
-                    board.squares[location[0], location[1]] = new Square(location);
-                    location[0]++;
-                }
+                lc[0] = lc[0] + ((int)char.GetNumericValue(c));
             }
             else if (char.IsLetter(c))
             {
-                Piece pc=charPiece(c);
-                pc.location=location;
+                Piece pc = charPiece(c);
+                pc.location[0] = lc[0];
+                pc.location[1]=lc[1];
                 board.pieces.Add(pc);
-                board.squares[location[0], location[1]] = new Square(board.pieces[^1], location);
+                lc[0] = lc[0] + 1;
             }
             else if (c == '/')
             {
-                location[1]++;
+                lc[1] = lc[1] - 1;
+                lc[0] = 0;
             }
         }
-        fixColors(board);
     }
 
-    static Piece charPiece(char c){
-        Piece piece=new Piece();
-        if(char.IsUpper(c))
-            piece.color=Color.White;
+    static Piece charPiece(char c)
+    {
+        Piece piece = new Piece();
+        if (char.IsUpper(c))
+            piece.color = Color.White;
         else
-            piece.color=Color.Black;
+            piece.color = Color.Black;
 
-        switch(char.ToLower(c)){
+        switch (char.ToLower(c))
+        {
             case 'k':
-                piece.type=Piece.Type.King;
+                piece.type = Piece.Type.King;
                 break;
             case 'q':
-                piece.type=Piece.Type.Queen;
+                piece.type = Piece.Type.Queen;
                 break;
             case 'r':
-                piece.type=Piece.Type.Rook;
+                piece.type = Piece.Type.Rook;
                 break;
             case 'b':
-                piece.type=Piece.Type.Bishop;
+                piece.type = Piece.Type.Bishop;
                 break;
             case 'n':
-                piece.type=Piece.Type.Knight;
+                piece.type = Piece.Type.Knight;
                 break;
             case 'p':
-                piece.type=Piece.Type.Pawn;
+                piece.type = Piece.Type.Pawn;
                 break;
             default:
-                piece.type=Piece.Type.King;
+                piece.type = Piece.Type.King;
                 break;
         }
         return piece;
     }
 
-    static void fixColors(Board board)
+    static void makeBoard(Board board)
     {
         for (int row = 0; row < 8; row++)
         {
             for (int column = 0; column < 8; column++)
             {
+                int[] location = { column, row };
                 if ((row + column) % 2 == 0)
                 {
-                    board.squares[column, row].color = Color.White;
+                    board.squares[column, row] = new Square(location, Color.Black);
                 }
                 else
                 {
-                    board.squares[column, row].color = Color.Black;
+                    board.squares[column, row] = new Square(location, Color.White);
                 }
             }
         }

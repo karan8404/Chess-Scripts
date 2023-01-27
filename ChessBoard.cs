@@ -14,14 +14,14 @@ public class ChessBoard : MonoBehaviour
         Board board = new Board();
         board.startGame();
 
-        foreach (Square sq in board.squares)
-        {
-            Instantiate(squares[((int)sq.color)], new Vector3(sq.location[0], sq.location[1], 0), Quaternion.identity, boardObjects.transform);
+        for(int row=7;row>=0;row--){
+            for(int column=0;column<8;column++){
+                Instantiate(squares[((int)board.squares[column,row].color)],new Vector3(column-3.5f,row-3.5f,0),Quaternion.identity,boardObjects.transform);
+            }
         }
-
         foreach (Piece pc in board.pieces)
         {
-            Instantiate(pieces[((int)pc.type) + ((int)pc.color) * 6], new Vector3(pc.location[0], pc.location[1], 0), Quaternion.identity, pieceObjects.transform);
+            Instantiate(pieces[((int)pc.type) + ((int)pc.color) * 6], new Vector3(pc.location[0]-3.5f, pc.location[1]-3.5f, 0), Quaternion.identity, pieceObjects.transform);
         }
     }
 
