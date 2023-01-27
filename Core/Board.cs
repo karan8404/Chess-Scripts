@@ -22,8 +22,8 @@ public class Board
         throw new System.Exception("No piece found with given location");
     }
 
-    public void startGame()
+    public void startGame(string fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
     {
-        FenUtility.createBoard(this, FenUtility.startingPosition);
+        FenUtility.createBoard(this,fen);
     }
 }
