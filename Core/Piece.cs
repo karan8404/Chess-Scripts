@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class Piece
 {
-    Type type;
-    Color color;
+    public Type type;
+    public Color color;
     public int[] location = new int[2];//[x,y][column,row]
 
     public Piece(Type type, Color color, int[] location)
