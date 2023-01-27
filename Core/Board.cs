@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Board{
     public Square[,] squares=new Square[8,8];
-    public List<Piece> pieces; 
+    public List<Piece> pieces=new List<Piece>(); 
 
     public Square squareAt(int[] location){
         return squares[location[0],location[1]];

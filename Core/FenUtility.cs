@@ -24,7 +24,9 @@ public class FenUtility
             }
             else if (char.IsLetter(c))
             {
-                board.pieces.Add(pieceDictionary[c]);
+                Piece pc=charPiece(c);
+                pc.location=location;
+                board.pieces.Add(pc);
                 board.squares[location[0], location[1]] = new Square(board.pieces[^1], location);
             }
             else if (c == '/')
@@ -33,6 +35,39 @@ public class FenUtility
             }
         }
         fixColors(board);
+    }
+
+    static Piece charPiece(char c){
+        Piece piece=new Piece();
+        if(char.IsUpper(c))
+            piece.color=Color.White;
+        else
+            piece.color=Color.Black;
+
+        switch(char.ToLower(c)){
+            case 'k':
+                piece.type=Piece.Type.King;
+                break;
+            case 'q':
+                piece.type=Piece.Type.Queen;
+                break;
+            case 'r':
+                piece.type=Piece.Type.Rook;
+                break;
+            case 'b':
+                piece.type=Piece.Type.Bishop;
+                break;
+            case 'n':
+                piece.type=Piece.Type.Knight;
+                break;
+            case 'p':
+                piece.type=Piece.Type.Pawn;
+                break;
+            default:
+                piece.type=Piece.Type.King;
+                break;
+        }
+        return piece;
     }
 
     static void fixColors(Board board)
@@ -52,20 +87,4 @@ public class FenUtility
             }
         }
     }
-
-    public static Dictionary<char, Piece> pieceDictionary = new Dictionary<char, Piece>{
-        {'p', Piece.blackPawn},
-        {'n', Piece.blackKnight},
-        {'b', Piece.blackBishop},
-        {'r', Piece.blackRook},
-        {'q', Piece.blackQueen},
-        {'k', Piece.blackKing},
-
-        {'P', Piece.whitePawn},
-        {'N', Piece.whiteKnight},
-        {'B', Piece.whiteBishop},
-        {'R', Piece.whiteRook},
-        {'Q', Piece.whiteQueen},
-        {'K', Piece.whiteKing}
-    };
 }
