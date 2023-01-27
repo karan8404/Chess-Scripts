@@ -5,20 +5,20 @@ public class Piece
 {
     Type type;
     Color color;
-    int[] location=new int[2];//[x,y][column,row]
+    public int[] location=new int[2];//[x,y][column,row]
 
-    Piece(Type type,Color color,int[] location){
+    public Piece(Type type,Color color,int[] location){
         this.type=type;
         this.color=color;
         this.location=location;
     }
 
-    Piece(Type type,Color color){
+    public Piece(Type type,Color color){
         this.type=type;
         this.color=color;
     }
 
-    enum Type{
+    public enum Type{
     King,
     Queen,
     Rook,

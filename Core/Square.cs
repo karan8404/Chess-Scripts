@@ -7,18 +7,21 @@ public class Square
     bool hasPiece;
     Piece piece;
 
-    Square(Color color){
-        this.color=color;
-        hasPiece=false;
+    public Square(Color color)
+    {
+        this.color = color;
+        hasPiece = false;
     }
 
-    Square(Color c=Color.White,Piece p){
-        color=c;
-        hasPiece=true;
-        piece=p;
+    public Square(Piece p, Color c = Color.White)
+    {
+        color = c;
+        hasPiece = true;
+        piece = p;
     }
 
-    Square(){
-        hasPiece=false;
+    public Square()
+    {
+        hasPiece = false;
     }
 }

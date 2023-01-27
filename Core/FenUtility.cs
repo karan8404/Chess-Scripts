@@ -5,38 +5,38 @@ using System.Collections.Generic;
 public class FenUtility
 {
     string fen;
-    static string startingPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+    public static string startingPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
-    public static Board createBoard(string fen)
+    public static void createBoard(Board board, string fen)
     {
-        int[2] location = { 0, 0 };
-        Board board = new Board();
+        int[] location = { 0, 0 };
         for (int i = 0; i < fen.Length; i++)
         {
             char c = fen[i];
             if (char.IsDigit(c))
             {
-                int cNum = char.GetNumericValue(c);
+                int cNum = ((int)char.GetNumericValue(c));
                 while (cNum-- > 0)
                 {
-                    board.squares[location[0]][location[1]]=new Square();
-                    location[0]=location[0]+1;
+                    board.squares[location[0],location[1]] = new Square();
+                    location[0]++;
                 }
             }
             else if (char.IsLetter(c))
             {
                 board.pieces.Add(pieceDictionary[c]);
-                board.squares[location[0]][location[1]]=new Square(board.pieces[^1]);
+                board.squares[location[0],location[1]] = new Square(board.pieces[^1]);
             }
-            else if(c=='/'){
-                location[1]=location[1]+1;
+            else if (c == '/')
+            {
+                location[1]++;
             }
         }
     }
 
-    Dictionary<char, Piece> pieceDictionary = new Dictionary<char, Piece>();
+    public static Dictionary<char, Piece> pieceDictionary = new Dictionary<char, Piece>();
 
-    void fillDictionary()
+    public static void fillDictionary()
     {
         pieceDictionary.Add('p', Piece.blackPawn);
         pieceDictionary.Add('n', Piece.blackKnight);
