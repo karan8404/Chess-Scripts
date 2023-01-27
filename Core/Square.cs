@@ -6,18 +6,14 @@ class Square
     Color color;
     bool hasPiece;
     Piece piece;
-    int[] location;//[x,y][column,row]
 
-    void Square(Color color,int[] location){
+    Square(Color color){
         this.color=color;
-        this.location=location;
         hasPiece=false;
     }
 
-    void Square(Color color,int[] location,Piece piece){
-        this.color=color;
-        this.location=location;
-        hasPiece=true;
-        this.piece=piece;
+    Square(Color c,Piece p){
+        color=c;
+        piece=p;
     }
 }

@@ -15,7 +15,11 @@ class FenUtility
             char c = fen[i];
             if (char.IsDigit(c))
             {
-                location[0] = location[0] + char.GetNumericValue(c);
+                int cNum = char.GetNumericValue(c);
+                while (cNum-- > 0)
+                {
+                    board.squareAt(location) = new Square(Color.White);
+                }
             }
             else if (char.IsLetter(c))
             {
