@@ -24,6 +24,8 @@ public class FenUtility
                 pc.location[0] = lc[0];
                 pc.location[1]=lc[1];
                 board.pieces.Add(pc);
+                board.squares[lc[0],lc[1]].piece=pc;
+                board.squares[lc[0],lc[1]].hasPiece=true;
                 lc[0] = lc[0] + 1;
             }
             else if (c == '/')
