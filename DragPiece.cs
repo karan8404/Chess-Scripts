@@ -1,23 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//use input system package
-
+using UnityEngine.InputSystem;
 public class DragPiece : MonoBehaviour
 {
-    Camera mainCam;
+    Camera m_Camera;
     void Awake()
     {
-        mainCam = Camera.main;
+        m_Camera = Camera.main;
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        Mouse mouse = Mouse.current;
+        if (mouse.leftButton.wasPressedThisFrame)
         {
-            Vector3 mPos = Input.mousePosition;
-            Ray ray=mainCam.ScreenPointToRay(mPos);
-            if(Physics.Raycast(ray,out RaycastHit hit)){
-                
+            Vector3 mousePosition = mouse.position.ReadValue();
+            Ray ray = m_Camera.ScreenPointToRay(mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 50))
+            {
+                Debug.Log(hit.point);
+                hit.transform.localScale = hit.transform.localScale * 1.2f;
             }
         }
     }
