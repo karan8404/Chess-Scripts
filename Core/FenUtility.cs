@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FenUtility : MonoBehaviour
+public class FenUtility
 {
     public string startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
-    public void createBoard(Board board, string fen)
+    public static void createBoard(Board board, string fen)
     {
         int column = 0, row = 7;
         foreach (char c in fen)
@@ -18,8 +18,8 @@ public class FenUtility : MonoBehaviour
             else if (char.IsLetter(c))
             {
                 Piece pc = charPiece(c);
-                board.squares[column,row].placePiece(pc);
-                column=column+1;
+                board.squares[column, row].placePiece(pc);
+                column = column + 1;
             }
             else if (c == '/')
             {
@@ -62,7 +62,7 @@ public class FenUtility : MonoBehaviour
                 type = Piece.Type.King;
                 break;
         }
-        Piece piece=new Piece(color,type);
+        Piece piece = new Piece(color, type);
         return piece;
     }
 }

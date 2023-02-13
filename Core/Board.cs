@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Board : MonoBehaviour
+public class Board
 {
     public Square[,] squares;
     public Vector3 location;
     public string fen;
 
-    public Board(Vector3 location, string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
+    public Board(Vector3 location)
     {
         this.location = location;
+        squares = new Square[8, 8];
+    }
+
+    public void startGame(string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
+    {
         this.fen = fen;
 
         for (int row = 0; row < 8; row++)
@@ -25,5 +30,7 @@ public class Board : MonoBehaviour
                 squares[column, row].createInstance();
             }
         }
+
+        FenUtility.createBoard(this, this.fen);
     }
 }

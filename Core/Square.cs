@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Square : MonoBehaviour
+public class Square : ScriptableObject
 {
-    public Vector3 location;
+    public GameObject squareContainer;
+    private Vector3 location;
     public GameObject instance;
-    public Color color;
-    public bool hasPiece;
-    public Piece piece;
-    public GameObject[] prefabs;//white then black
+    private Color color;
+    private bool hasPiece;
+    private Piece piece;
+    public static GameObject[] prefabs;//white then black
 
 
     public Square(Vector3 location, Color color)
@@ -21,7 +22,7 @@ public class Square : MonoBehaviour
 
     public void createInstance()
     {
-        instance=Instantiate(prefabs[((int)color)],location,Quaternion.identity);
+        instance = Instantiate(prefabs[((int)color)], location, Quaternion.identity,squareContainer.transform);
     }
 
     public void placePiece(Piece piece)
