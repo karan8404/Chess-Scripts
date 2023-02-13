@@ -8,10 +8,12 @@ public class ChessBoard : MonoBehaviour
     public GameObject[] pieces;//first white then black pieces.
     public GameObject boardObjects;
     public GameObject pieceObjects;
+
+    public static Board board;
     // Start is called before the first frame update
     void Start()
     {
-        Board board = new Board();
+        board = new Board();
         board.startGame();
 
         for(int row=7;row>=0;row--){
@@ -29,5 +31,10 @@ public class ChessBoard : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public static Piece GetPieceAt(Vector3 position){
+        int[] location={((int)(position.x+3.5f)),((int)(position.y+3.5f))};
+        return board.pieceAt(location);
     }
 }
