@@ -1,25 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Square
+public class Square : MonoBehaviour
 {
+    public Vector3 location;
+    public GameObject instance;
     public Color color;
     public bool hasPiece;
     public Piece piece;
-    public int[] location;
+    public GameObject[] prefabs;//white then black
 
-    public Square(int[] location, Color color = Color.White)
+
+    public Square(Vector3 location, Color color)
     {
+        this.location = location;
         this.color = color;
         hasPiece = false;
-        this.location = location;
     }
 
-    public Square(Piece p, int[] location, Color c = Color.White)
+    public void createInstance()
     {
-        color = c;
+        instance=Instantiate(prefabs[((int)color)],location,Quaternion.identity);
+    }
+
+    public void placePiece(Piece piece)
+    {
         hasPiece = true;
-        piece = p;
-        this.location = location;
+        this.piece = piece;
+        this.piece.createInstance(location);
+    }
+
+    public void removePiece()
+    {
+        hasPiece = false;
+        this.piece = null;
+        Destroy(this.piece.instance);
+        this.piece.instance = null;
+    }
+
+    public enum Color
+    {
+        White,
+        Black
     }
 }

@@ -1,34 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Piece
+public class Piece : MonoBehaviour
 {
-    public Type type;
+    public GameObject instance;
     public Color color;
-    public int[] location = new int[2];//[x,y][column,row]
-
-    public Piece(Type type, Color color, int[] location)
-    {
-        this.type = type;
-        this.color = color;
-        this.location = location;
+    public Type type;
+    public GameObject[] prefabs;//first white then black.
+    
+    public Piece(Color color,Type type){
+        this.color=color;
+        this.type=type;
     }
 
-    public Piece(Type type, Color color)
-    {
-        this.type = type;
-        this.color = color;
+    public void createInstance(Vector3 location){
+        instance=Instantiate(prefabs[((int)type)+((int)color)*6],location,Quaternion.identity);
     }
 
-    public Piece(){}
-
-    public enum Type
-    {
+      public enum Type{
         King,
         Queen,
         Rook,
         Bishop,
         Knight,
         Pawn
+    }
+
+    public enum Color{
+        White,
+        Black
     }
 }

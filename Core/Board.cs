@@ -2,28 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Board
+public class Board : MonoBehaviour
 {
-    public Square[,] squares = new Square[8, 8];
-    public List<Piece> pieces = new List<Piece>();
+    public Square[,] squares;
+    public Vector3 location;
+    public string fen;
 
-    public Square squareAt(int[] location)
+    public Board(Vector3 location, string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
     {
-        return squares[location[0], location[1]];
-    }
+        this.location = location;
+        this.fen = fen;
 
-    public Piece pieceAt(int[] location)
-    {
-        for (int i = 0; i < pieces.Count; i++)
+        for (int row = 0; row < 8; row++)
         {
-            if (pieces[i].location[0] == location[0] && pieces[i].location[1] == location[1])
-                return pieces[i];
-        }
-        throw new System.Exception("No piece found with given location");
-    }
+            //creates the squares.
+            for (int column = 0; column < 8; column++)
+            {
+                Square.Color color = (column + row) % 2 == 0 ? Square.Color.Black : Square.Color.White;
+                Vector3 position = new Vector3(location.x + column - 3.5f, location.y + row - 3.5f, location.z);
 
-    public void startGame(string fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
-    {
-        FenUtility.createBoard(this,fen);
+                squares[column, row] = new Square(position, color);
+                squares[column, row].createInstance();
+            }
+        }
     }
 }
