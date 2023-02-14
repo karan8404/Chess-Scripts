@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Board : MonoBehaviour
+public class Game : MonoBehaviour
 {
     public GameObject[,] squares;
     public Piece[,] pieces;
@@ -31,7 +31,7 @@ public class Board : MonoBehaviour
 
         //placing pieces according to fen
         GetComponent<FenUtility>().createBoard(fen,out pieces);
-        
+
         
     }
 }
