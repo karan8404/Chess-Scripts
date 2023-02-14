@@ -1,24 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class FenUtility
+public class FenUtility : MonoBehaviour
 {
-    public string startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+    public static string startingPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
-    public static void createBoard(Board board, string fen)
+    public void createBoard(string fen, out Piece[,] pieces)
     {
+        pieces = new Piece[8, 8];
         int column = 0, row = 7;
         foreach (char c in fen)
         {
             if (char.IsDigit(c))
             {
-                column = column + ((int)char.GetNumericValue(c));
+                int count = ((int)char.GetNumericValue(c));
+                while (count-- > 0)
+                {
+                    pieces[column,row]=new Piece();
+                    column=column+1;
+                }
             }
             else if (char.IsLetter(c))
             {
-                Piece pc = charPiece(c);
-                board.squares[column, row].placePiece(pc);
+                Vector3 location = new Vector3(column - 3.5f, row - 3.5f, 0);
+                Color color;
+                Type type;
+                charPiece(c, out type, out color);
+                pieces[column,row]=new Piece(type,color);
+
+                pieces[column,row].instance=GetComponent<Instantiater>().createPiece(location, color, type);
                 column = column + 1;
             }
             else if (c == '/')
@@ -29,40 +39,36 @@ public class FenUtility
         }
     }
 
-    static Piece charPiece(char c)
+    void charPiece(char c, out Type type, out Color color)
     {
-        Piece.Color color;
-        Piece.Type type;
         if (char.IsUpper(c))
-            color = Piece.Color.White;
+            color = Color.White;
         else
-            color = Piece.Color.Black;
+            color = Color.Black;
 
         switch (char.ToLower(c))
         {
             case 'k':
-                type = Piece.Type.King;
+                type = Type.King;
                 break;
             case 'q':
-                type = Piece.Type.Queen;
+                type = Type.Queen;
                 break;
             case 'r':
-                type = Piece.Type.Rook;
+                type = Type.Rook;
                 break;
             case 'b':
-                type = Piece.Type.Bishop;
+                type = Type.Bishop;
                 break;
             case 'n':
-                type = Piece.Type.Knight;
+                type = Type.Knight;
                 break;
             case 'p':
-                type = Piece.Type.Pawn;
+                type = Type.Pawn;
                 break;
             default:
-                type = Piece.Type.King;
+                type = Type.King;
                 break;
         }
-        Piece piece = new Piece(color, type);
-        return piece;
     }
 }
