@@ -23,12 +23,9 @@ public class FenUtility : MonoBehaviour
             else if (char.IsLetter(c))
             {
                 Vector3 location = new Vector3(column - 3.5f, row - 3.5f, 0);
-                Color color;
-                Type type;
-                charPiece(c, out type, out color);
-                pieces[column,row]=new Piece(type,color);
+                pieces[column,row]=charPiece(c);
 
-                pieces[column,row].instance=GetComponent<Instantiater>().createPiece(location, color, type);
+                GetComponent<Instantiater>().createPiece(pieces[column,row],location);
                 column = column + 1;
             }
             else if (c == '/')
@@ -39,8 +36,10 @@ public class FenUtility : MonoBehaviour
         }
     }
 
-    void charPiece(char c, out Type type, out Color color)
+    Piece charPiece(char c)
     {
+        Color color;
+        Type type;
         if (char.IsUpper(c))
             color = Color.White;
         else
@@ -70,5 +69,6 @@ public class FenUtility : MonoBehaviour
                 type = Type.King;
                 break;
         }
+        return new Piece(type,color);
     }
 }

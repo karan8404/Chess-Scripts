@@ -12,7 +12,9 @@ public class Instantiater : MonoBehaviour
         return Instantiate(squarePrefabs[((int)color)],location,Quaternion.identity,squareContainer.transform);
     }
 
-    public GameObject createPiece(Vector3 location, Color color, Type type){
-        return Instantiate(piecePrefabs[((int)type)+((int)color)*6],location,Quaternion.identity,pieceContainer.transform);
+    public GameObject createPiece(Piece piece,Vector3 location){
+        Type type=piece.type;
+        Color color=piece.color;
+        return piece.instance=Instantiate(piecePrefabs[((int)type)+((int)color)*6],location,Quaternion.identity,pieceContainer.transform);
     }
 }

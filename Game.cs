@@ -31,7 +31,11 @@ public class Game : MonoBehaviour
 
         //placing pieces according to fen
         GetComponent<FenUtility>().createBoard(fen,out pieces);
-
         
     }
+
+    public void placePiece(Piece piece,Vector2Int start,Vector2Int end){
+        
+    }
+
 }
