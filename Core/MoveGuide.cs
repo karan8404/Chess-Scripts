@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MoveGuide
 {
+    bool canWhiteCastleShort;
+    bool canWhiteCastleLong;
+    bool canBlackCastleShort;
+    bool canBlackCastleLong;
     Piece[,] pieces;
     public static bool isStraightMove(Vector2Int move)
     {
@@ -28,24 +32,26 @@ public class MoveGuide
     public static bool isKingMove(Vector2Int move)
     {
         //absolute values of x and y must not be greater than 1
-        if(Mathf.Abs(move.x)>1 || Mathf.Abs(move.y)>1)
+        if (Mathf.Abs(move.x) > 1 || Mathf.Abs(move.y) > 1)
             return false;
         return true;
     }
 
-    public static bool isKnightMove(Vector2Int move){
-        int x=Mathf.Abs(move.x);
-        int y=Mathf.Abs(move.y);
+    public static bool isKnightMove(Vector2Int move)
+    {
+        int x = Mathf.Abs(move.x);
+        int y = Mathf.Abs(move.y);
         //both x and y are less than 3 and greater than 0
         //and if x=1 then y=2, vice versa.i.e. both should not be equal.
-        if(x>2||x<1||y>2||y<1)
+        if (x > 2 || x < 1 || y > 2 || y < 1)
             return false;
-        if(x==y)
+        if (x == y)
             return false;
         return true;
     }
 
-    public static bool isWhitePawnMove(Vector2Int move){
+    public static bool isWhitePawnMove(Vector2Int move)
+    {
         return false;
     }
 }

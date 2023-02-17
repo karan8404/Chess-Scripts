@@ -13,6 +13,14 @@ public class Piece
         hasPiece=false;
     }
 
+    public Vector3 getPosition(){
+        return instance.transform.position;
+    }
+
+    public void setPosition(Vector3 position){
+        instance.transform.position=position;
+    }
+
     public Piece(Type type,Color color){
         this.type=type;
         this.color=color;

@@ -30,11 +30,21 @@ public class Game : MonoBehaviour
         }
 
         //placing pieces according to fen
-        GetComponent<FenUtility>().createBoard(fen,out pieces);
-        
+        GetComponent<FenUtility>().createBoard(fen, out pieces);
+
     }
 
-    public void placePiece(Piece piece,Vector2Int start,Vector2Int end){
+    public void placePiece(Piece piece, Vector2 originalPosition, Vector2 finalPosition)
+    {
+
+        if (Mathf.Abs(finalPosition.x) > 4.0f || Mathf.Abs(finalPosition.y) > 4.0f)
+        {
+            finalPosition.x = originalPosition.x;
+            finalPosition.y = originalPosition.y;
+        }
+        Vector2Int normalizedOriginal = new Vector2Int(Mathf.RoundToInt(originalPosition.x + 3.5f), Mathf.RoundToInt(originalPosition.y + 3.5f));
+        Vector2Int normalizedFinal = new Vector2Int(Mathf.RoundToInt(finalPosition.x + 3.5f), Mathf.RoundToInt(finalPosition.y + 3.5f));
+
         
     }
 
