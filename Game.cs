@@ -36,37 +36,26 @@ public class Game : MonoBehaviour
 
     public void placePiece(Piece piece, Vector2 originalPosition, Vector2 finalPosition)
     {
-        Vector2Int normalizedOriginal = new Vector2Int(Mathf.RoundToInt(originalPosition.x + 3.5f), Mathf.RoundToInt(originalPosition.y + 3.5f));
-        if (Mathf.Abs(finalPosition.x) > 4.0f || Mathf.Abs(finalPosition.y) > 4.0f)
-        {
-            piece.setPosition((Vector3)(originalPosition));
-            pieces[normalizedOriginal.x,normalizedOriginal.y]=piece;
-            return;
-        }
+        Vector2Int normalizedOriginal=posToIndex(originalPosition);
+        Vector2Int normalizedFinal=posToIndex(finalPosition);
 
-        Vector2Int normalizedFinal = new Vector2Int(Mathf.RoundToInt(finalPosition.x + 3.5f), Mathf.RoundToInt(finalPosition.y + 3.5f));
-        finalPosition.x = normalizedFinal.x - 3.5f;
-        finalPosition.y = normalizedFinal.y - 3.5f;
-
-        ref Piece locationPiece = ref pieces[normalizedFinal.x, normalizedFinal.y];
-
-        if (!locationPiece.hasPiece || locationPiece.color != piece.color)
-        {
-            Destroy(locationPiece.instance);
-            pieces[normalizedOriginal.x, normalizedOriginal.y].hasPiece = false;
-            pieces[normalizedFinal.x, normalizedFinal.y] = piece;
+        if(MoveGuide.isLegal(piece,originalPosition,finalPosition)){
+            pieces[normalizedOriginal.x,normalizedOriginal.y].hasPiece=false;
+            //destory the instance in MoveGuide class
             piece.setPosition(finalPosition);
-            return;
+            pieces[normalizedFinal.x,normalizedFinal.y]=piece;   
         }
-
-        if (locationPiece.color == piece.color)
-        {
-            piece.setPosition((Vector3)(originalPosition));
+        else{
             pieces[normalizedOriginal.x,normalizedOriginal.y]=piece;
-            return;
+            piece.setPosition(originalPosition);
         }
-
-        Debug.Log("something is wrong");
     }
 
+    public static Vector2Int posToIndex(Vector2 vector){
+        return new Vector2Int(Mathf.RoundToInt(vector.x+3.5f),Mathf.RoundToInt(vector.y+3.5f));
+    }
+
+    public static Vector2 indexToPos(Vector2Int vector){
+        return new Vector2(vector.x+3.5f,vector.y+3.5f);
+    }
 }

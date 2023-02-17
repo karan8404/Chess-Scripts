@@ -9,6 +9,10 @@ public class MoveGuide
     bool canBlackCastleShort;
     bool canBlackCastleLong;
     Piece[,] pieces;
+
+    public static bool isLegal(Piece piece,Vector2 original,Vector2 final){
+        return false;
+    }
     public static bool isStraightMove(Vector2Int move)
     {
         //atleast one of the axes must be zero
