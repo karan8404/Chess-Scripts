@@ -59,7 +59,7 @@ public class DragPiece : MonoBehaviour
 
             Vector2 finalPosition = new Vector2(x, y);
 
-            Board.GetComponent<Game>().placePiece(pickedPiece, (Vector2)(originalPosition), finalPosition);
+            Board.GetComponent<Game>().placePiece(pickedPiece, originalPosition, finalPosition);
             pickedPiece = dummy;
         }
     }

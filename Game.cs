@@ -39,7 +39,9 @@ public class Game : MonoBehaviour
         Vector2Int normalizedOriginal = posToIndex(originalPosition);
         Vector2Int normalizedFinal = posToIndex(finalPosition);
 
-        if (MoveGuide.isLegal(ref pieces,ref piece,ref pieces[normalizedFinal.x, normalizedFinal.y], originalPosition, finalPosition))
+        //first checks if move is on board.
+        if ((MoveGuide.isOnBoard(normalizedFinal))
+            &&MoveGuide.isLegal(ref pieces,piece,pieces[normalizedFinal.x, normalizedFinal.y], normalizedOriginal, normalizedFinal))
         {
             //set original position to not have a piece
             //for final position, destroy instance, set piece position to it and modify it to have a piece. 
