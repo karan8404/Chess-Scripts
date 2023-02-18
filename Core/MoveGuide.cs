@@ -60,6 +60,39 @@ public static class MoveGuide
         return true;
     }
 
+    //check directly in game class.
+    public static bool isOnBoard(Vector2Int end)
+    {
+        if (end.x < 0 || end.y < 0 || end.x > 7 || end.y > 7)
+        {
+            Debug.Log("Not on board");
+            return false;
+        }
+        return true;
+    }
+
+    public static bool capturesSameColorPiece()
+    {
+        if (moved.color == captured.color)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static bool isCorrectTurn()
+    {
+        if (whiteToMove && moved.color == Color.Black)
+        {
+            return false;
+        }
+        else if (!whiteToMove && moved.color == Color.White)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public static bool isPieceMoveLegal()
     {
         if (moved.type == Type.King)
@@ -112,40 +145,6 @@ public static class MoveGuide
         return true;
     }
 
-
-    //check directly in game class.
-    public static bool isOnBoard(Vector2Int end)
-    {
-        if (end.x < 0 || end.y < 0 || end.x > 7 || end.y > 7)
-        {
-            Debug.Log("Not on board");
-            return false;
-        }
-        return true;
-    }
-
-    public static bool capturesSameColorPiece()
-    {
-        if (moved.color == captured.color)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public static bool isCorrectTurn()
-    {
-        if (whiteToMove && moved.color == Color.Black)
-        {
-            return false;
-        }
-        else if (!whiteToMove && moved.color == Color.White)
-        {
-            return false;
-        }
-        return true;
-    }
-
     public static bool hasPieceinBetween()
     {
 
@@ -167,6 +166,18 @@ public static class MoveGuide
             translateVector(ref current, ref end);
         }
         return false;
+    }
+
+    public static void translateVector(ref Vector2Int current, ref Vector2Int target)//moves current towards target one step
+    {
+        if (current.x != target.x)
+        {
+            current.x -= ((int)Mathf.Sign(current.x - target.x));
+        }
+        if (current.y != target.y)
+        {
+            current.y -= ((int)Mathf.Sign(current.y - target.y));
+        }
     }
 
     public static bool isRookMove()
@@ -242,17 +253,5 @@ public static class MoveGuide
             return true;
         }
         return false;
-    }
-
-    public static void translateVector(ref Vector2Int current, ref Vector2Int target)//moves current towards target one step
-    {
-        if (current.x != target.x)
-        {
-            current.x -= ((int)Mathf.Sign(current.x - target.x));
-        }
-        if (current.y != target.y)
-        {
-            current.y -= ((int)Mathf.Sign(current.y - target.y));
-        }
     }
 }
