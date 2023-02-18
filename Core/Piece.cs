@@ -9,21 +9,27 @@ public class Piece
     public Type type;
     public bool hasPiece;
 
-    public Piece(){
-        hasPiece=false;
+    public Piece()
+    {
+        hasPiece = false;
+        color = Color.Empty;
+        type = Type.Empty;
     }
 
-    public Vector3 getPosition(){
+    public Vector3 getPosition()
+    {
         return instance.transform.position;
     }
 
-    public void setPosition(Vector3 position){
-        instance.transform.position=position;
+    public void setPosition(Vector3 position)
+    {
+        instance.transform.position = position;
     }
 
-    public Piece(Type type,Color color){
-        this.type=type;
-        this.color=color;
-        hasPiece=true;
+    public Piece(Type type, Color color)
+    {
+        this.type = type;
+        this.color = color;
+        hasPiece = true;
     }
 }

@@ -4,5 +4,6 @@ public enum Type{
     Rook,
     Bishop,
     Knight,
-    Pawn
+    Pawn,
+    Empty
 }

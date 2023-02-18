@@ -8,10 +8,21 @@ public class MoveGuide
     bool canWhiteCastleLong;
     bool canBlackCastleShort;
     bool canBlackCastleLong;
-    Piece[,] pieces;
+    static Piece[,] pieces;
 
-    public static bool isLegal(Piece piece,Vector2 original,Vector2 final){
-        return false;
+    public static bool isLegal(ref Piece[,] pcs,ref Piece start,ref Piece end, Vector2 original, Vector2 final)
+    {
+        pieces = pcs;
+        if (!isOnBoard(final))
+        {
+            return false;
+        }
+
+        if(capturesSameColorPiece(start,end)){
+            return false;
+        }
+
+        return true;
     }
     public static bool isStraightMove(Vector2Int move)
     {
@@ -56,6 +67,24 @@ public class MoveGuide
 
     public static bool isWhitePawnMove(Vector2Int move)
     {
+        return false;
+    }
+
+    public static bool isOnBoard(Vector2 final)
+    {
+        if (Mathf.Abs(final.x) > 4.0f || Mathf.Abs(final.y) > 4.0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static bool capturesSameColorPiece(Piece original, Piece final)
+    {
+        if (original.color == final.color)
+        {
+            return true;
+        }
         return false;
     }
 }

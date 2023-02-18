@@ -36,26 +36,32 @@ public class Game : MonoBehaviour
 
     public void placePiece(Piece piece, Vector2 originalPosition, Vector2 finalPosition)
     {
-        Vector2Int normalizedOriginal=posToIndex(originalPosition);
-        Vector2Int normalizedFinal=posToIndex(finalPosition);
+        Vector2Int normalizedOriginal = posToIndex(originalPosition);
+        Vector2Int normalizedFinal = posToIndex(finalPosition);
 
-        if(MoveGuide.isLegal(piece,originalPosition,finalPosition)){
-            pieces[normalizedOriginal.x,normalizedOriginal.y].hasPiece=false;
-            //destory the instance in MoveGuide class
-            piece.setPosition(finalPosition);
-            pieces[normalizedFinal.x,normalizedFinal.y]=piece;   
+        if (MoveGuide.isLegal(ref pieces,ref piece,ref pieces[normalizedFinal.x, normalizedFinal.y], originalPosition, finalPosition))
+        {
+            //set original position to not have a piece
+            //for final position, destroy instance, set piece position to it and modify it to have a piece. 
+            pieces[normalizedOriginal.x, normalizedOriginal.y].hasPiece = false;
+            Destroy(pieces[normalizedFinal.x,normalizedFinal.y].instance);
+            piece.setPosition(normalizedFinal - Vector2.one * 3.5f);
+            pieces[normalizedFinal.x, normalizedFinal.y] = piece;
         }
-        else{
-            pieces[normalizedOriginal.x,normalizedOriginal.y]=piece;
+        else
+        {
+            pieces[normalizedOriginal.x, normalizedOriginal.y] = piece;
             piece.setPosition(originalPosition);
         }
     }
 
-    public static Vector2Int posToIndex(Vector2 vector){
-        return new Vector2Int(Mathf.RoundToInt(vector.x+3.5f),Mathf.RoundToInt(vector.y+3.5f));
+    public static Vector2Int posToIndex(Vector2 vector)
+    {
+        return new Vector2Int(Mathf.RoundToInt(vector.x + 3.5f), Mathf.RoundToInt(vector.y + 3.5f));
     }
 
-    public static Vector2 indexToPos(Vector2Int vector){
-        return new Vector2(vector.x+3.5f,vector.y+3.5f);
+    public static Vector2 indexToPos(Vector2Int vector)
+    {
+        return new Vector2(vector.x + 3.5f, vector.y + 3.5f);
     }
 }
