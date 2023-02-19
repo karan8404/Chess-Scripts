@@ -49,8 +49,9 @@ public class DragPiece : MonoBehaviour
 
         if (mouse.leftButton.wasReleasedThisFrame)
         {
-            if(pickedPiece==dummy){
-                pickedPiece.setPosition(Vector3.right*5);
+            if (pickedPiece == dummy)
+            {
+                pickedPiece.setPosition(Vector3.right * 5);
                 return;
             }
             //if released, snap to place or to start and alter pieces array.
@@ -68,7 +69,7 @@ public class DragPiece : MonoBehaviour
     {
         Piece dummy = new Piece();
         dummy.instance = new GameObject();
-        dummy.setPosition(Vector3.right*5);
+        dummy.setPosition(Vector3.right * 5);
 
         return dummy;
     }

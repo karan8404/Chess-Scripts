@@ -1,4 +1,5 @@
-public enum Type{
+public enum Type
+{
     King,
     Queen,
     Rook,

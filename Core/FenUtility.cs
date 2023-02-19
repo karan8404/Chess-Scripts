@@ -16,16 +16,16 @@ public class FenUtility : MonoBehaviour
                 int count = ((int)char.GetNumericValue(c));
                 while (count-- > 0)
                 {
-                    pieces[column,row]=new Piece();
-                    column=column+1;
+                    pieces[column, row] = new Piece();
+                    column = column + 1;
                 }
             }
             else if (char.IsLetter(c))
             {
                 Vector3 location = new Vector3(column - 3.5f, row - 3.5f, 0);
-                pieces[column,row]=charPiece(c);
+                pieces[column, row] = charPiece(c);
 
-                GetComponent<Instantiater>().createPiece(pieces[column,row],location);
+                GetComponent<Instantiater>().createPiece(pieces[column, row], location);
                 column = column + 1;
             }
             else if (c == '/')
@@ -69,6 +69,6 @@ public class FenUtility : MonoBehaviour
                 type = Type.King;
                 break;
         }
-        return new Piece(type,color);
+        return new Piece(type, color);
     }
 }
