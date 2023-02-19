@@ -36,17 +36,17 @@ public class Game : MonoBehaviour
 
     public void placePiece(Piece piece, Vector2 originalPosition, Vector2 finalPosition)
     {
+        Instantiater instantiater=GetComponent<Instantiater>();
         Vector2Int normalizedOriginal = posToIndex(originalPosition);
         Vector2Int normalizedFinal = posToIndex(finalPosition);
 
         //first checks if move is on board.
         if ((MoveGuide.isOnBoard(normalizedFinal))
-            && MoveGuide.isLegal(ref pieces, piece, pieces[normalizedFinal.x, normalizedFinal.y], normalizedOriginal, normalizedFinal))
+            && MoveGuide.isLegal(ref pieces, piece,pieces[normalizedFinal.x, normalizedFinal.y], normalizedOriginal, normalizedFinal,instantiater))
         {
             //set original position to not have a piece
             //for final position, destroy instance, set piece position to it and modify it to have a piece. 
-            pieces[normalizedOriginal.x, normalizedOriginal.y].hasPiece = false;
-            Destroy(pieces[normalizedFinal.x, normalizedFinal.y].instance);
+            instantiater.destroyPiece(pieces[normalizedOriginal.x, normalizedOriginal.y]);
             piece.setPosition(normalizedFinal - Vector2.one * 3.5f);
             pieces[normalizedFinal.x, normalizedFinal.y] = piece;
         }

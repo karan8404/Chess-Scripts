@@ -9,6 +9,7 @@ public static class MoveGuide
     public static bool canBlackCastleShort = true;
     public static bool canBlackCastleLong = true;
     public static bool whiteToMove = true;
+    public static Vector3Int EnpassantPos;
 
     public static Piece[,] pieces;
     public static Piece moved;
@@ -16,10 +17,11 @@ public static class MoveGuide
     public static Vector2Int start;
     public static Vector2Int end;
     public static Vector2Int move;
+    public static Instantiater instantiater;
 
 
     //vectors passed are passed as array indices.
-    public static bool isLegal(ref Piece[,] pcs, Piece mvd, Piece cptrd, Vector2Int st, Vector2Int ed)
+    public static bool isLegal(ref Piece[,] pcs, Piece mvd, Piece cptrd, Vector2Int st, Vector2Int ed, Instantiater instr)
     {
         //resetting data members
         pieces = pcs;
@@ -28,6 +30,7 @@ public static class MoveGuide
         start = st;
         end = ed;
         move = end - start;
+        instantiater = instr;
 
         if (capturesSameColorPiece())
         {
@@ -57,6 +60,15 @@ public static class MoveGuide
         {
             whiteToMove = !whiteToMove;
         }
+        if (EnpassantPos.z == 0)
+        {
+            EnpassantPos = Vector3Int.one * (-1);
+        }
+        else
+        {
+            EnpassantPos.z -= 1;
+        }
+
         return true;
     }
 
@@ -223,16 +235,22 @@ public static class MoveGuide
 
     public static bool isWhitePawnMove()
     {
-        if (move == Vector2Int.up)
+        if (move == Vector2Int.up && !captured.hasPiece)
         {
             return true;
         }
-        else if (start.y == 1 && move == Vector2Int.up * 2)//two square movement on first move
+        else if (start.y == 1 && move == Vector2Int.up * 2 && !captured.hasPiece)//two square movement on first move
+        {
+            EnpassantPos = new Vector3Int(end.x, end.y - 1, 1);
+            return true;
+        }
+        else if (Mathf.Abs(move.x) == 1 && move.y == 1 && captured.hasPiece)//normal capture
         {
             return true;
         }
-        else if (Mathf.Abs(move.x) == 1 && move.y == 1 && captured.color == Color.Black)//capture
+        else if (Mathf.Abs(move.x) == 1 && move.y == 1 && (end.x == EnpassantPos.x && end.y == EnpassantPos.y))//En Passant capture
         {
+            instantiater.destroyPiece(pieces[end.x, end.y - 1]);
             return true;
         }
         return false;
@@ -240,16 +258,22 @@ public static class MoveGuide
 
     public static bool isBlackPawnMove()
     {
-        if (move == Vector2Int.down)
+        if (move == Vector2Int.down && !captured.hasPiece)
         {
             return true;
         }
-        else if (start.y == 6 && move == Vector2Int.down * 2)//two square movement on first move
+        else if (start.y == 6 && move == Vector2Int.down * 2 && !captured.hasPiece)//two square movement on first move
+        {
+            EnpassantPos = new Vector3Int(end.x, end.y + 1, 1);
+            return true;
+        }
+        else if (Mathf.Abs(move.x) == 1 && move.y == -1 && captured.hasPiece)//normal capture
         {
             return true;
         }
-        else if (Mathf.Abs(move.x) == 1 && move.y == -1 && captured.color == Color.White)//capture
+        else if (Mathf.Abs(move.x) == 1 && move.y == -1 && (end.x == EnpassantPos.x && end.y == EnpassantPos.y))//En Passant capture
         {
+            instantiater.destroyPiece(pieces[end.x, end.y + 1]);
             return true;
         }
         return false;

@@ -19,4 +19,9 @@ public class Instantiater : MonoBehaviour
         Color color = piece.color;
         return piece.instance = Instantiate(piecePrefabs[((int)type) + ((int)color) * 6], location, Quaternion.identity, pieceContainer.transform);
     }
+
+    public void destroyPiece(Piece piece){
+        Destroy(piece.instance);
+        piece.hasPiece=false;
+    }
 }
