@@ -4,10 +4,6 @@ using UnityEngine;
 
 public static class MoveGuide
 {
-    public static bool canWhiteCastleShort = true;
-    public static bool canWhiteCastleLong = true;
-    public static bool canBlackCastleShort = true;
-    public static bool canBlackCastleLong = true;
     public static bool whiteToMove = true;
     public static Vector3Int EnpassantPos;
 
@@ -68,7 +64,7 @@ public static class MoveGuide
         {
             EnpassantPos.z -= 1;
         }
-
+            
         return true;
     }
 
@@ -177,6 +173,10 @@ public static class MoveGuide
             }
             translateVector(ref current, ref end);
         }
+        return false;
+    }
+
+    public static bool isUnderCheck(){
         return false;
     }
 

@@ -7,4 +7,5 @@ public enum Type
     Knight,
     Pawn,
     Empty
+    //only exists to avoid null on empty squares.
 }

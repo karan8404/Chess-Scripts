@@ -46,7 +46,7 @@ public class Game : MonoBehaviour
         {
             //set original position to not have a piece
             //for final position, destroy instance, set piece position to it and modify it to have a piece. 
-            instantiater.destroyPiece(pieces[normalizedOriginal.x, normalizedOriginal.y]);
+            instantiater.destroyPiece(pieces[normalizedFinal.x, normalizedFinal.y]);
             piece.setPosition(normalizedFinal - Vector2.one * 3.5f);
             pieces[normalizedFinal.x, normalizedFinal.y] = piece;
         }
