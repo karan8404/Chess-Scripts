@@ -5,6 +5,8 @@ using UnityEngine;
 public static class MoveGuide
 {
     public static bool whiteToMove = true;
+    //public static Piece whiteKing=pieces[4,0];
+    //public static Piece blackKing=pieces[4,7];
     public static Vector3Int EnpassantPos;
 
     public static Piece[,] pieces;
@@ -177,6 +179,7 @@ public static class MoveGuide
     }
 
     public static bool isUnderCheck(){
+        
         return false;
     }
 
