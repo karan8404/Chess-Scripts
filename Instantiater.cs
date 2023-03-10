@@ -8,6 +8,7 @@ public class Instantiater : MonoBehaviour
     public GameObject pieceContainer;
     public GameObject[] squarePrefabs;
     public GameObject[] piecePrefabs;
+    public GameObject circlePrefab;
     public GameObject createSquare(Vector3 location, Color color)
     {
         return Instantiate(squarePrefabs[((int)color)], location, Quaternion.identity, squareContainer.transform);
@@ -24,5 +25,21 @@ public class Instantiater : MonoBehaviour
     {
         Destroy(piece.instance);
         piece.hasPiece = false;
+    }
+    List<GameObject> circleIndicators = new List<GameObject>();
+    public void showMoves(List<Vector2Int> moves)
+    {
+        foreach (Vector2Int move in moves)
+        {
+            circleIndicators.Add(Instantiate(circlePrefab, move - Vector2.one * 3.5f, Quaternion.identity));
+        }
+    }
+    public void removeMoves()
+    {
+        foreach (GameObject indicator in circleIndicators)
+        {
+            Destroy(indicator);
+        }
+        circleIndicators.Clear();
     }
 }

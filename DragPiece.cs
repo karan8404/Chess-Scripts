@@ -10,6 +10,7 @@ public class DragPiece : MonoBehaviour
     Piece pickedPiece;
     Camera mainCam;
     Piece dummy;
+    Game game;
 
     void Awake()
     {
@@ -29,16 +30,20 @@ public class DragPiece : MonoBehaviour
         Mouse mouse = Mouse.current;
         Vector3 mousePosition = mouse.position.ReadValue();
         mousePosition = mainCam.ScreenToWorldPoint(mousePosition);
+        game=Board.GetComponent<Game>();
 
         if (mouse.leftButton.wasPressedThisFrame && Mathf.Abs(mousePosition.x) < 4.0f && Mathf.Abs(mousePosition.y) < 4.0f)
         {
-            pickedPiece = Board.GetComponent<Game>().pieces[Mathf.RoundToInt(mousePosition.x + 3.5f), Mathf.RoundToInt(mousePosition.y + 3.5f)];
-            if (!(pickedPiece.hasPiece))
+            pickedPiece = game.pieces[Mathf.RoundToInt(mousePosition.x + 3.5f), Mathf.RoundToInt(mousePosition.y + 3.5f)];
+            originalPosition = pickedPiece.getPosition();
+            if (pickedPiece.hasPiece){
+                game.pickPiece2(pickedPiece,originalPosition);
+            }
+            else
             {
                 pickedPiece = dummy;
             }
-            Board.GetComponent<Game>().pieces[Mathf.RoundToInt(mousePosition.x + 3.5f), Mathf.RoundToInt(mousePosition.y + 3.5f)] = new Piece();
-            originalPosition = pickedPiece.getPosition();
+            game.pieces[Mathf.RoundToInt(mousePosition.x + 3.5f), Mathf.RoundToInt(mousePosition.y + 3.5f)] = new Piece();
         }
 
         if (mouse.leftButton.isPressed)
@@ -60,7 +65,7 @@ public class DragPiece : MonoBehaviour
 
             Vector2 finalPosition = new Vector2(x, y);
 
-            Board.GetComponent<Game>().placePiece(pickedPiece, originalPosition, finalPosition);
+            game.placePiece2(pickedPiece, originalPosition, finalPosition);
             pickedPiece = dummy;
         }
     }
