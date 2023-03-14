@@ -5,30 +5,45 @@ using UnityEngine;
 public static class MoveGuide2
 {
 
-    public static List<Vector2Int> moves=new List<Vector2Int>();
+    public static List<Vector2Int> moves = new List<Vector2Int>();
     static Piece[,] pieces;
     static Piece moved;
     static Vector2Int start;
     static Vector2Int end;
     static Instantiater instantiater;
+    static bool whiteToMove=true;
+    static Vector3Int enPassantMove=new Vector3Int(-10,-10,-1);
 
     public static bool isLegal(Vector2Int ed)
     {
-        end=ed;
-        if(moves.Contains(end)){
-            return true;
+        end = ed;
+        if(moved.type==Type.Pawn &&(end.x==enPassantMove.x && end.y==enPassantMove.y)){
+            return true;//enpassant
         }
-        return false;
+        if (!moves.Contains(end))
+        {
+            return false;
+        }
+        //TODO implement turn based moves.
+        whiteToMove=!whiteToMove;
+        enPassantMove.z=enPassantMove.z-1;
+        if(enPassantMove.z==0){
+            enPassantMove=new Vector3Int(-10,-10,-1);
+        }
+        if(moved.type==Type.Pawn && Mathf.Abs(start.y-end.y)==2){
+            enPassantMove=new Vector3Int(start.x,((int)moved.color)*3+2,1);
+        }
+        return true;
     }
 
-    public static void generateMoves(ref Piece[,] pcs, Piece mvd, Vector2Int st,Instantiater instr)
+    public static void generateMoves(ref Piece[,] pcs, Piece mvd, Vector2Int st, Instantiater instr)
     {
         moves.Clear();
         pieces = pcs;
         moved = mvd;
         start = st;
-        instantiater=instr;
-        Type type=moved.type;
+        instantiater = instr;
+        Type type = moved.type;
         switch (type)
         {
             case Type.King:
@@ -48,6 +63,7 @@ public static class MoveGuide2
                 break;
             case Type.Pawn:
                 genPawnMoves();
+                //add code to show enpassant move prefab
                 break;
         }
         instantiater.showMoves(moves);
